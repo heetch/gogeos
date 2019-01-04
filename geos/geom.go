@@ -928,3 +928,12 @@ func (g *Geometry) binaryFloat(name string, cfn binaryFloatGetter, other *Geomet
 func (g *Geometry) simplify(name string, cfn func(*C.GEOSGeometry, C.double) *C.GEOSGeometry, d float64) (*Geometry, error) {
 	return geomFromC(name, cfn(g.g, C.double(d)))
 }
+
+// Must is a helper that wraps a call to a function returning (*Geometry, error)
+// and panics if the error is non-nil.
+func Must(g *Geometry, err error) *Geometry {
+	if err != nil {
+		panic(err)
+	}
+	return g
+}
